@@ -8,6 +8,10 @@ declare global {
 		// interface PageState {}
 		// interface Platform {}
 	}
+
+	interface Request {
+        validate<T extends ZodType>(schema: T): Promise<z.infer<T> & { errors?: Record<string, unknown> }>;
+    }
 }
 
 export {};
