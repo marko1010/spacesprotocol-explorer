@@ -3,9 +3,9 @@
 </script>
 <div class="shadow-lg mb-10 flex justify-center">
     <div class="container flex p-2 px-10 items-center gap-5">
-      <a href='/' class="flex items-center">
-        <img class="w-[50px]" src="/logo.png" alt="Spaces Protocol" />
-        <h1 class="text-xl font-bold">Spaces Protocol</h1>
+      <a href='/' class="flex items-center shrink-0">
+        <img class="w-[50px] h-[50px]" src="/logo.png" alt="Spaces Protocol" />
+        <h1 class="text-xl font-bold hidden lg:block">Spaces Protocol</h1>
       </a>
       <label class="h-[40px] grow input input-bordered flex items-center gap-2">
           <input type="text" class="grow" placeholder="Search" />

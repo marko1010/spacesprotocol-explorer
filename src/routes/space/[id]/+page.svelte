@@ -130,15 +130,15 @@
         <div class="w-full mt-7 flex flex-col gap-1">
             <h1 class="text-xl ml-1 mb-4">Transaction History</h1>
             {#each data.history as event}
-                <a href="/tx/1">
+                <a href="/tx/{event.txid}">
                     <div class="grow flex items-center p-4 bg-base-200 hover:bg-base-300 hover:scale-[101%] transition-transform text-gray-400 rounded-xl gap-2 shadow-md border border-neutral ">
-                        <div class="flex justify-start py-2 px-3 bg-neutral rounded-2xl gap-2 w-[110px] mr-2">
-                            <img src="{event.action == 'rollout' ? "/reveal.svg" : "/coins.svg"}" alt="reveal"  class="w-[26px] h-[26px]" />
+                        <div class="flex justify-start items-center py-2 px-3 bg-neutral rounded-2xl gap-2 w-[110px] mr-2">
+                            <img src="/action/{event.action}.svg" alt="reveal"  class="w-[20px] h-[20px]" />
                             <span class="grow text-center">{event.action[0].toUpperCase() + event.action.slice(1)}</span>
                         </div>
                         <div class="flex flex-col">
                             <span class="text-accent font-semibold">{event.txid.slice(0,10)}...{event.txid.slice(-10)}</span>
-                            <span class="text-sm">{dayjs(event.createdAt).format('lll')}</span>
+                            <span class="text-sm">{dayjs.unix(event.transaction.block.time).format('lll')}</span>
                         </div>
                         <span class="grow text-end font-semibold">{event.bid_amount ? `${event.bid_amount} SAT` : ""}</span>
                     </div>

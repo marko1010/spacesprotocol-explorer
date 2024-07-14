@@ -23,8 +23,11 @@ export const blocks = pgTable('blocks', {
 	weight: bigint('weight', { mode: 'number' }).notNull(),
 	createdAt: timestamp('created_at').notNull().defaultNow(),
 	updatedAt: timestamp('updated_at')
-
 });
+
+export const blocksRelations = relations(blocks, ({ many }) => ({
+	transactions: many(transactions),
+}));
 
 export const transactions = pgTable('transactions', {
 	id: serial('id').primaryKey(),
@@ -36,6 +39,15 @@ export const transactions = pgTable('transactions', {
 	createdAt: timestamp('created_at').notNull().defaultNow(),
 	updatedAt: timestamp('updated_at')
 });
+
+export const transactionsRelations = relations(transactions, ({ one, many }) => ({
+	block: one(blocks, {
+		fields: [transactions.blockId],
+		references: [blocks.id],
+	}),
+	spaceHistories: many(spacesHistory),
+}));
+
 
 export const spaces = pgTable('spaces', {
 	id: serial('id').primaryKey(),
@@ -67,6 +79,10 @@ export const spacesHistoryRelations = relations(spacesHistory, ({ one }) => ({
 	space: one(spaces, {
 		fields: [spacesHistory.spaceId],
 		references: [spaces.id],
+	}),
+	transaction: one(transactions, {
+		fields: [spacesHistory.transactionId],
+		references: [transactions.id],
 	}),
 }));
 

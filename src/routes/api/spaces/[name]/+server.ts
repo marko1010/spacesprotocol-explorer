@@ -12,6 +12,7 @@ export const GET: RequestHandler = async function ({ request, url, params }) {
         with: { 
             history: { 
                 columns: { id: true, action: true, bid_amount: true, txid: true, createdAt: true },
+                with: { transaction: { with: { block : { columns: { time: true } } } } },
                 orderBy: (history, {desc}) => desc(history.id),
             },
         } 
