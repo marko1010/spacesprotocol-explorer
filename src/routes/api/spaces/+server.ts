@@ -21,6 +21,7 @@ export const GET: RequestHandler = async function ({ request, url }) {
                 orderBy: (history) => history.id,
             },
         }
-    })
+    });
+
     return json(spacesDb);
 }

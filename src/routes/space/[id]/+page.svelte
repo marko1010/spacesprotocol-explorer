@@ -7,8 +7,6 @@
     export let data;
     const firstBid = data.history.filter(x => x.action == 'bid')?.pop()?.bid_amount;
     const highestBid = data.history.filter(x => x.action == 'bid')?.[0]?.bid_amount;
-
-    console.log(data);
 </script>
 <div class="flex p-5 gap-5">
     <div class="basis-1/3 flex flex-col gap-10 items-center">
@@ -33,10 +31,6 @@
                 <span>Price increase:</span>
                 <span>{Math.round(highestBid/firstBid)}x</span>
             </div>
-            <div class="flex justify-between">
-                <span>Marketplace Listing</span>
-                <a href="https://namebase.io" class="link-accent">Namebase</a>
-            </div>
         </div>
     </div>
     <div class="basis-2/3 flex flex-wrap content-baseline gap-2">
@@ -49,7 +43,7 @@
         <div class="basis-[45%] grow flex flex-col p-4 bg-base-200 text-gray-400 rounded-xl gap-1 shadow-md border border-neutral">
             <h1 class="text-xl font-bold">Top Bid</h1>
             <div class="flex items-center text-nowrap">
-                <span>{highestBid} SAT ($110)</span>
+                <span>{highestBid} <span class="text-xs text-gray-500">SAT</span> ($110)</span>
                 {#if ['pre-auction', 'auction'].includes(data.status)}
                     <button class="ml-3 btn btn-sm btn-accent">Bid Now</button>
                 {/if}
@@ -101,10 +95,12 @@
             <h1 class="text-xl font-bold text-nowrap">In Transfer</h1>
             <span>No</span>
         </div>
-        <div class="basis-[23%] grow flex flex-col p-4 bg-base-200 text-gray-400 rounded-xl gap-1 shadow-md border border-neutral">
-            <h1 class="text-xl font-bold">Expires in</h1>
-            <span>15664 blocks</span>
-        </div>
+        {#if data.status == 'registered'}
+            <div class="basis-[23%] grow flex flex-col p-4 bg-base-200 text-gray-400 rounded-xl gap-1 shadow-md border border-neutral">
+                <h1 class="text-xl font-bold">Expiry block</h1>
+                <span>{data.history.findLast(x => x.action == 'transfer').meta.covenant.expire_height}</span>
+            </div>
+        {/if}
         <div class="basis-[23%] grow flex flex-col p-4 bg-base-200 text-gray-400 rounded-xl gap-1 shadow-md border border-neutral">
             <h1 class="text-xl font-bold">Expires on</h1>
             <span>October 14, 2024</span>
@@ -137,10 +133,10 @@
                             <span class="grow text-center">{event.action[0].toUpperCase() + event.action.slice(1)}</span>
                         </div>
                         <div class="flex flex-col">
-                            <span class="text-accent font-semibold">{event.txid.slice(0,10)}...{event.txid.slice(-10)}</span>
-                            <span class="text-sm">{dayjs.unix(event.transaction.block.time).format('lll')}</span>
+                            <span class="">{event.txid.slice(0,10)}...{event.txid.slice(-10)}</span>
+                            <span class="text-sm text-gray-500">{dayjs.unix(event.transaction.block.time).format('lll')}</span>
                         </div>
-                        <span class="grow text-end font-semibold">{event.bid_amount ? `${event.bid_amount} SAT` : ""}</span>
+                        <span class="grow text-primary text-end font-semibold">{event.bid_amount ? `${event.bid_amount} SAT` : ""}</span>
                     </div>
                 </a>
             {/each}

@@ -48,12 +48,11 @@ export const transactionsRelations = relations(transactions, ({ one, many }) => 
 	spaceHistories: many(spacesHistory),
 }));
 
-
 export const spaces = pgTable('spaces', {
 	id: serial('id').primaryKey(),
 	name: text('name').notNull().unique(),
 	status: text('status').notNull(),
-	statusTxId: integer('status_tx_id').notNull().references(() => transactions.id),
+	spacesHistoryId: integer('spaces_history_id').references(() => spacesHistory.id, { onDelete: 'cascade' }),
 	createdAt: timestamp('created_at').notNull().defaultNow(),
 	updatedAt: timestamp('updated_at')
 });
@@ -64,8 +63,8 @@ export const spacesRelations = relations(spaces, ({ many }) => ({
 
 export const spacesHistory = pgTable('spaces_history', {
 	id: serial('id').primaryKey(),
-	spaceName: text('space_name').notNull().references(() => spaces.name),
-	spaceId: integer('space_id').notNull().references(() => spaces.id),
+	spaceName: text('space_name').notNull().references(() => spaces.name, { onDelete: 'cascade' }),
+	spaceId: integer('space_id').notNull().references(() => spaces.id, { onDelete: 'cascade' }),
 	transactionId: integer('transaction_id').notNull().references(() => transactions.id),
 	txid: text('txid').notNull().references(() => transactions.txid),
 	action: text('action'),

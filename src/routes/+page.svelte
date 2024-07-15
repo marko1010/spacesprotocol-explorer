@@ -5,7 +5,6 @@
     dayjs.extend(LocalizedFormat);
 
     export let data;
-    console.log('data', data);
 </script>
 
 <div class="flex flex-col justify-center">
@@ -26,7 +25,7 @@
                         <span class="text-lg font-semibold tracking-wider ">{space.name}</span>
                         <div class="text-xs my-2 rounded-2xl bg-{statusMeta[space.status].color} text-white text-center w-fit px-2 font-semibold py-[2px]">{statusMeta[space.status].name}</div>
                         <div class="text-sm text-white group-hover:text-primary-content flex items-center">
-                            Current bid: 
+                            Highest bid: 
                             <span class="font-semibold ml-1">{space.history.filter(x => x.action == 'bid').pop()?.bid_amount}</span>
                             <span class="text-gray-500 group-hover:text-gray-900 ml-1 text-xs relative top-[.5px]">SAT</span>
                         </div>
