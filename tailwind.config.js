@@ -23,7 +23,7 @@ export default {
     typeography
   ],
   daisyui: {
-    themes: ["light", "dark", "cupcake", "halloween", "business", "sunset", "coffee", "night", "dim", "luxury"],
+    themes: ["light", "dark", "cupcake", "halloween", "business", "sunset", "coffee", "night", "dim", "luxury", "black", "lofi", "corporate"],
   },
 }
 

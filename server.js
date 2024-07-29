@@ -13,8 +13,8 @@ app.get('/healthcheck', (req, res) => {
 });
 
 app.use((req, res, next) => {
-    if (req.headers['Host'] != process.env.DOMAIN)
-        return res.end(403);
+    if (req.headers['host'] != process.env.DOMAIN)
+        return res.status(403).end();
     
     next();
 });

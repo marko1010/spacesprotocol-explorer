@@ -55,7 +55,7 @@
                 <span class="text-3xl text-accent font-extrabold">1580 </span><span class="text-gray-500 font-bold">points</span>
             </div>
         </div>
-        <div class="basis-[60%] grow flex flex-col p-4 bg-base-200 text-gray-400 rounded-xl gap-1 shadow-md border border-neutral">
+        <!-- <div class="basis-[60%] grow flex flex-col p-4 bg-base-200 text-gray-400 rounded-xl gap-1 shadow-md border border-neutral">
             <h1 class="text-xl font-bold">Tags</h1>
             <div class="mt-1 flex flex-wrap gap-1">
                 <div class="badge py-4">german</div>
@@ -69,7 +69,7 @@
             <div>
                 <span class="text-2xl text-primary font-extrabold">Legendary</span>
             </div>
-        </div>
+        </div> -->
 
         <div class="basis-[23%] grow flex flex-col p-4 bg-base-200 text-gray-400 rounded-xl gap-1 shadow-md border border-neutral">
             <h1 class="text-xl font-bold">Status</h1>
