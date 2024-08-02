@@ -29,10 +29,10 @@
 </script>
 
 <div class="flex flex-col justify-center">
-  <div class="w-full flex justify-between items-center pr-4 mt-5 mb-16">
-    <div class="w-1/3"></div>
-    <h1 class="w-1/3 text-center text-3xl font-semibold">Spaces in Auction</h1>
-    <div class='w-1/3 flex justify-end'>
+  <div class="w-full flex flex-col md:flex-row justify-between items-center md:pr-4 mt-5 mb-10 md:mb-16 gap-8 md:gap-0">
+    <div class="hidden md:block md:w-1/3"></div>
+    <h1 class="w-full md:w-1/3 text-center text-3xl font-semibold">Spaces in Auction</h1>
+    <div class='w-[220px] md:w-[160px] mx-auto md:ml-auto md:mr-0 md:w-1/3 flex justify-center md:justify-end'>
       <SortSelector on:change={onSortChange} options={sortOptions} />
     </div>
   </div>

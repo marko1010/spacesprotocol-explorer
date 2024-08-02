@@ -24,7 +24,7 @@
   });
 </script>
 
-<button class="relative w-[160px]" bind:this={elem} on:click={() => (open = !open)}>
+<button class="relative w-full" bind:this={elem} on:click={() => (open = !open)}>
   <div class="bg-black border border-primary group w-full p-2 cursor-pointer flex justify-between items-center gap-1 text-sm">
     <div class="grow">{selected.name}</div>
     <svg class="w-[18px] h-[18px] group-hover:fill-gray-300" xmlns="http://www.w3.org/2000/svg" fill="gray" viewBox="0 0 320 512"

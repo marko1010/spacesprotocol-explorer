@@ -17,5 +17,8 @@ export const GET: RequestHandler = async function ({ request, url, params }) {
         } 
     });
 
+    if (!spacesDb)
+        error (404, { error: "Space not found" });
+
     return json(spacesDb);
 };

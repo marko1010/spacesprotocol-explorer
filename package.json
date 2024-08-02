@@ -1,5 +1,5 @@
 {
-	"name": "my-app",
+	"name": "spacesprotocol-explorer",
 	"version": "0.0.1",
 	"private": true,
 	"scripts": {
@@ -40,6 +40,8 @@
 	"type": "module",
 	"dependencies": {
 		"@sveltejs/adapter-node": "^5.2.0",
+		"bech32": "^2.0.0",
+		"buffer": "^6.0.3",
 		"dayjs": "^1.11.11",
 		"dotenv": "^16.4.5",
 		"drizzle-orm": "^0.31.2",

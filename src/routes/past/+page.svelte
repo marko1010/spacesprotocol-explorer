@@ -25,22 +25,25 @@
 </script>
 
 <div class="flex flex-col justify-center">
-  <div class="w-full flex justify-between items-center pr-4 mt-5 mb-16">
-    <div class="w-1/3"></div>
-    <h1 class="w-1/3 text-center text-3xl font-semibold">Past Auctions</h1>
-    <div class="w-1/3 flex justify-end">
+  <div class="w-full flex flex-col md:flex-row justify-between items-center md:pr-4 mt-5 mb-10 md:mb-16 gap-8 md:gap-0">
+    <div class="hidden md:block md:w-1/3"></div>
+    <h1 class="w-full md:w-1/3 text-center text-3xl font-semibold">Past Auctions</h1>
+    <div class='w-[220px] md:w-[160px] mx-auto md:ml-auto md:mr-0 md:w-1/3 flex justify-center md:justify-end'>
       <SortSelector on:change={onSortChange} options={sortOptions} />
     </div>
   </div>
   <div class="grid gap-5" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
     {#each data.spaces ?? [] as space}
-      <a href={`/space/${space.name}`}>
+      <a href={`/space/${space.name}`} class="flex justify-center">
         <div
           class="group hover:z-10 relative group flex flex-col py-7 gap-2 rounded-3xl border border-b-8 border-primary w-[220px] cursor-pointer text-primary hover:bg-primary hover:text-primary-content hover:sc1ale-110 bg-base-100 transition-transform duration-300"
         >
-          <div class="px-4">
+          <div class="px-4 flex flex-col gap-2" >
             <span class="text-lg text-gray-400 font-semibold tracking-wider">{space.name}</span>
             <div class="text-xs my-2 rounded-2xl bg-{statusMeta[space.status].color} text-white text-center w-fit px-2 font-semibold py-[2px]">{statusMeta[space.status].name}</div>
+            <div class="text-sm text-gray-600 group-hover:text-primary-content flex items-center">
+              Number of bids: <span class="font-semibold ml-1 text-gray-400">{space.history.filter((x) => x.action == "bid").length}</span>
+            </div>
             <div class="text-sm text-gray-600 group-hover:text-primary-content flex items-center">
               Highest bid:
               <span class="font-semibold ml-1">{space.history.filter((x) => x.action == "bid").pop()?.bid_amount}</span>
