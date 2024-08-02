@@ -47,11 +47,13 @@
       highlightedResultIdx = highlightedResultIdx -1;
     else if (event.key == 'Enter') {
       showSearchResults = false;
-      if (highlightedResultIdx >= 0)
+      if (highlightedResultIdx >= 0) {
+        search = searchResults[highlightedResultIdx].name;
         goto(`/space/${searchResults[highlightedResultIdx].name}`);
-      else if (search.length > 0 && search != '@') {
+      } else if (search.length > 0 && search != '@') {
         navigatingToSpacePage = true;
         showSearchResults = false;
+        search = search[0] == '@' ? search : `@${search}`;
         goto(`/space/@${search[0] == '@' ? search.slice(1) : search}`);
       }
     }
@@ -84,7 +86,7 @@
             </div>
           {:else if showSearchResults && searchResults.length}
             {#each searchResults as result, idx}
-              <a class="p-1 hover:bg-gray-800 {highlightedResultIdx == idx ? "bg-gray-800" : ""}" on:click={() => (showSearchResults = false)} href={`/space/${result.name}`}>{result.name}</a>
+              <a class="p-1 hover:bg-gray-800 {highlightedResultIdx == idx ? "bg-gray-800" : ""}" on:click={() => {showSearchResults = false; search = result.name;}} href={`/space/${result.name}`}>{result.name}</a>
             {/each}
           {:else if showSearchResults}
             No results
