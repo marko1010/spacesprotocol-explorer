@@ -7,10 +7,10 @@
     export let data;
 </script>
 
-<div class="flex flex-col grow p-5 gap-5">
-    <div class="flex gap-2 items-center mb-7">
+<div class="flex flex-col grow p-5 px-10 pt-0 md:pt-5 md:px-16 gap-5">
+    <div class="flex flex-wrap gap-2 items-center mb-7">
         <h1 class="font-bold text-3xl">Transaction</h1> 
-        <span class="top-1 relative text-zinc-500">#{data.txid}</span>
+        <span class="top-1 relative break-all text-zinc-500">#{data.txid}</span>
     </div>
     <div class="flex flex-wrap gap-10">
         <a href="/block/{data.blockHash}">

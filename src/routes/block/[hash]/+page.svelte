@@ -7,10 +7,10 @@
     export let data;
 </script>
 
-<div class="flex flex-col grow p-5 gap-5">
-    <div class="flex gap-2 items-center mb-7">
+<div class="flex flex-col grow p-5 px-10 pt-0 md:pt-5 md:px-16 gap-5">
+    <div class="flex flex-wrap gap-2 items-center mb-7">
         <h1 class="font-bold text-3xl">Block</h1> 
-        <span class="top-1 relative text-gray-500">{data.hash}</span>
+        <span class="top-1 break-all relative text-gray-500">{data.hash}</span>
     </div>
     <div class="flex flex-wrap gap-10 mb-10">
         <div class="flex flex-col grow">
@@ -34,13 +34,13 @@
             <span class="text-gray-500">Nonce</span>
         </div>
         <div class="flex flex-col grow">
-            <span class='text-xl text-[#ec8e32] font-semibold'>{data.merkleroot}</span>
+            <span class='text-xl break-all text-[#ec8e32] font-semibold'>{data.merkleroot}</span>
             <span class="text-gray-500">Merkle Root</span>
         </div>
     </div>
     <div class='flex flex-col gap-10'>
         {#each data.transactions as tx}
-            <div class="flex flex-wrap gap-5 p-5 bg-[#0b0d10]">
+            <div class="flex flex-wrap gap-5 p-5 md:p-8 bg-[#0b0d10]">
                 <h1 class="w-full text-gray-500">Tx # <a href='/tx/{tx.txid}' class="text-gray-300 hover:text-[#ec8e32] break-all">{tx.txid}</a></h1>
                 <div class="flex flex-col basis-full lg:basis-[45%] grow">
                     <h2 class="text-xl mb-1 pb-2 border-b border-b-gray-500">Inputs</h2>
