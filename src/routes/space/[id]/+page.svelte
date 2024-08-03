@@ -17,21 +17,21 @@
     }
   }
 
-  const highestBid = space.history?.filter((x) => x.action == "bid")?.[0]?.bid_amount;
-  const numberOfBids = space.history?.filter((x) => x.action == "bid").length;
-  const numberFormatter = new Intl.NumberFormat();
-  const outpoint = space.history?.find((x) => !!x.meta.outpoint)?.meta?.outpoint;
-  const currentOwner = space.history ? decodeScriptPubKeyToTaprootAddress(space.history?.find((x) => !!x.meta?.script_pubkey).meta?.script_pubkey, PUBLIC_BTC_NETWORK) : null;
-  const currentBlockHeight = blockStats.blockHeight;
-  const expiryHeight = space.history?.find(x => x.action == 'transfer')?.meta?.covenant?.expire_height;
+  $: highestBid = space.history?.filter((x) => x.action == "bid")?.[0]?.bid_amount;
+  $: numberOfBids = space.history?.filter((x) => x.action == "bid").length;
+  $: numberFormatter = new Intl.NumberFormat();
+  $: outpoint = space.history?.find((x) => !!x.meta.outpoint)?.meta?.outpoint;
+  $: currentOwner = space.history ? decodeScriptPubKeyToTaprootAddress(space.history?.find((x) => !!x.meta?.script_pubkey).meta?.script_pubkey, PUBLIC_BTC_NETWORK) : null;
+  $: currentBlockHeight = blockStats.blockHeight;
+  $: expiryHeight = space.history?.find(x => x.action == 'transfer')?.meta?.covenant?.expire_height;
 
-  let auctionHeader = "";
-  if (space.status == "pre-auction") auctionHeader = "Auction";
-  else if (space.status == "auction" && space.claimHeight > currentBlockHeight) {
-    auctionHeader = "In Auction";
-  } else auctionHeader = "Auction ended";
+  $: auctionHeader = space.status == "pre-auction" 
+    ? "Auction"
+    : space.status == "auction" && space.claimHeight > currentBlockHeight
+      ? "In Auction"
+      : "Auction ended";
 
-  const timeline = [
+  $: timeline = [
     {
       name: "Open",
       description: "Submit an open transaction to propose the space for auction.",
@@ -161,8 +161,8 @@
                 <a target="_blank" href="https://mempool.space/testnet/tx/{outpoint?.split(':')[0]}#vout={outpoint?.split(':')[1]}" class="text-[#ec8e32] hover:text-orange-700 break-words">{outpoint}</a>
               </li>
               {#if space.status == 'registered'}
-                <li class="border-b border-b-gray-400 pb-2">
-                  <span class="text-sm">Expiry block height:</span><br>
+                <li class="border-b border-b-gray-400 pb-2 flex flex-wrap items-center gap-2">
+                  <span class="text-sm">Expiry block height:</span>
                   <span class='text-[#ec8e32] hover:text-orange-700'>{expiryHeight} (in {formatDuration((expiryHeight - currentBlockHeight) * 10 * 60)})</span>
                 </li>
               {/if}
