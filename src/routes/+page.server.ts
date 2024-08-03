@@ -8,7 +8,7 @@ export const load: ServerLoad = async ({ fetch, locals, url }) => {
 
     const [spaces, blockStats] = await Promise.all([
         fetch(`/api/spaces?${url.searchParams.toString()}`).then(x => x.json()),
-        fetch('/api/blocks/stats').then(x => x.json())
+        fetch('/api/blocks/stats').then(x => x.body ? x.json() : null)
     ]);
     return { spaces, blockStats };
 };

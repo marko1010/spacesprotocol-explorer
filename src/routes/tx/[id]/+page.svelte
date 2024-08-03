@@ -3,6 +3,7 @@
     import LocalizedFormat from 'dayjs/plugin/localizedFormat';
     dayjs.extend(LocalizedFormat);
 
+    const numberFormatter = new Intl.NumberFormat();
     export let data;
 </script>
 
@@ -11,61 +12,58 @@
         <h1 class="font-bold text-3xl">Transaction</h1> 
         <span class="top-1 relative text-zinc-500">#{data.txid}</span>
     </div>
-    <div class="flex flex-wrap gap-3">
+    <div class="flex flex-wrap gap-10">
         <a href="/block/{data.blockHash}">
-            <div class="flex flex-col grow bg-info hover:opacity-90 text-info-content rounded-xl p-4 shadow-lg shadow-black">
-                <h2 class="text-lg font-bold">Block</h2>
-                <span>{data.block.height}</span>
+            <div class="flex flex-col grow hover:opacity-90 gap-1">
+                <span class='text-xl text-[#ec8e32] font-semibold'>{data.block.height}</span>
+                <span class="text-gray-500">Block</span>
             </div>
         </a>
-        <div class="flex flex-col grow bg-info text-info-content rounded-xl p-4 shadow-lg shadow-black">
-            <h2 class="text-lg font-bold">Time</h2>
-            <span>{dayjs.unix(data.block.time).format('lll')}</span>
+        <div class="flex flex-col grow gap-1">
+            <span class='text-xl text-[#ec8e32] font-semibold'>{dayjs.unix(data.block.time).format('lll')}</span>
+            <span class="text-gray-500">Time</span>
         </div>
-        <div class="flex flex-col grow bg-info text-info-content rounded-xl p-4 shadow-lg shadow-black">
-            <h2 class="text-lg font-bold">Version</h2>
-            <span>{data.version}</span>
+        <div class="flex flex-col grow gap-1">
+            <span class='text-xl text-[#ec8e32] font-semibold'>{data.version}</span>
+            <span class="text-gray-500">Version</span>
         </div>
-        <div class="flex flex-col grow bg-info text-info-content rounded-xl p-4 shadow-lg shadow-black">
-            <h2 class="text-lg font-bold">Lock Time</h2>
-            <span>{dayjs.unix(data.data.lock_time).format('lll')}</span>
+        <div class="flex flex-col grow gap-1">
+            <span class='text-xl text-[#ec8e32] font-semibold'>{dayjs.unix(data.data.lock_time).format('lll')}</span>
+            <span class="text-gray-500">Lock Time</span>
         </div>
-        <div class="flex flex-col grow bg-info text-info-content rounded-xl p-4 shadow-lg shadow-black">
-            <h2 class="text-lg font-bold">Confirmations</h2>
-            <span>{data.block.confirmations}</span>
+        <div class="flex flex-col grow gap-1">
+            <span class='text-xl text-[#ec8e32] font-semibold'>{data.block.confirmations}</span>
+            <span class="text-gray-500">Confirmations</span>
         </div>
     </div>
     <div class="flex flex-wrap gap-5 mt-10">
         <div class="flex flex-col basis-full lg:basis-[45%] grow">
-            <h2 class="text-2xl mb-5">Inputs</h2>
-            <div class="flex flex-col gap-4 rounded-xl bg-base-200 p-5 shadow shadow-black">
+            <h2 class="text-xl mb-1 pb-2 border-b border-b-gray-500">Inputs</h2>
+            <div class="flex flex-col gap-4 p-5 pl-1">
                 {#each data.data.vin ?? [] as vin}
                     <div class="flex items-center">
-                        <img src="/arrow-right.svg" alt="reveal" class="w-[16px] h-[16px] mr-4" />
+                        <svg class="w-[16px] h-[16px] mr-4" fill="#ec8e32" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/></svg>
                         {#if vin.previous_output.split(':')[0].replaceAll('0', '').length == 0}
-                            <span class="font-semibold">Coinbase</span>
+                            <span class="text-gray-500">Coinbase</span>
                         {:else}
-                            <a href="{vin.previous_output.split(':')[0]}" class="link font-semibold">{vin.previous_output}</a>
+                            <a href="{vin.previous_output.split(':')[0]}" class="text-gray-500 hover:text-[#ec8e32]">{vin.previous_output}</a>
                         {/if}
                     </div>
                 {/each}
             </div>
         </div>
         <div class="flex flex-col basis-full lg:basis-[45%] grow">
-            <h2 class="text-2xl mb-5">Outputs</h2>
-            <div class="flex flex-col gap-4 rounded-xl bg-base-200 p-5 shadow shadow-black">
-              {#each data.spaceHistories as spaceHistory}
-                    <a href="/space/{spaceHistory.spaceName}">
-                        <div class="flex items-center justify-between cursor-pointer hover:opacity-70">
-                            <a href="/space/{spaceHistory.spaceName}" class="link link-primary font-semibold text-right">{spaceHistory.spaceName}</a>
-                            <div class="flex justify-start items-center py-2 px-3 bg-neutral rounded-2xl gap-2 min-w-[110px] mr-2">
-                                <img src="/action/{spaceHistory.action}.svg" alt="reveal"  class="w-[20px] h-[20px]" />
-                                <span class="grow text-center">
-                                    {spaceHistory.action[0].toUpperCase() + spaceHistory.action.slice(1)}
-                                    {spaceHistory.action == 'reject' ? ` (${spaceHistory.meta.reason})`
-                                    : spaceHistory.action == 'bid' ? ` (${spaceHistory.bid_amount} sat)` : ""
-                                    }</span>
-                                </div>
+            <h2 class="text-xl mb-1 pb-2 border-b border-b-gray-500">Outputs</h2>
+            <div class="flex flex-col gap-4 p-5">
+              {#each data.spaceHistories as event}
+                    <a href="/space/{event.spaceName}" class="group">
+                        <div class='grid grid-cols-3'>
+                            <span class='text-gray-500'>{event.action[0].toUpperCase() + event.action.slice(1)}</span>
+                            <a href="/space/{event.spaceName}" class='text-center group-hover:text-[#ec8e32]'>{event.spaceName}</a>
+                            <span class="grow text-right">
+                                {event.action == 'reject' ? ` ${event.meta.reason}`
+                                : event.action == 'bid' ? ` ${numberFormatter.format(event.bid_amount)} sats` : ""
+                                }</span>
                         </div>
                     </a>
                 {/each}

@@ -67,7 +67,7 @@
       </a>
     {/each}
     {#if !data.spaces.length}
-      <span class="mx-auto text-gray-500">No upcoming auctions</span>
+      <span class="mx-auto text-gray-500">No past auctions</span>
     {/if}
   </div>
 </div>

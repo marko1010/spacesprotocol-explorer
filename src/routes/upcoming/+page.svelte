@@ -30,7 +30,9 @@
     <div class="hidden md:block md:w-1/3"></div>
     <div class="w-full md:w-1/3 flex flex-col gap-2 items-center">
       <h1 class="text-center text-3xl font-semibold">Upcoming Auctions</h1>
-      <h4 class="text-gray-500">Starts in: <span class="text-[#ec8e32]"><Countdown seconds={(145 - (currentBlockHeight % 145)) * 10 * 60} /></span></h4>
+      {#if data.spaces.length && currentBlockHeight}
+        <h4 class="text-gray-500">Starts in: <span class="text-[#ec8e32]"><Countdown seconds={(145 - (currentBlockHeight % 145)) * 10 * 60} /></span></h4>
+      {/if}
     </div>
     <div class='w-[220px] md:w-[160px] mx-auto md:ml-auto md:mr-0 md:w-1/3 flex justify-center md:justify-end'>
       <SortSelector on:change={onSortChange} options={sortOptions} />

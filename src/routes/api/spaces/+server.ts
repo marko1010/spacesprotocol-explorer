@@ -40,5 +40,5 @@ export const GET: RequestHandler = async function ({ request, url }) {
         orderBy
     });
 
-    return json(spacesDb);
+    return json(spacesDb ?? []);
 }

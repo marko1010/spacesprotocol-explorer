@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { decodeScriptPubKeyToTaprootAddress } from "$lib/utils.js";
+  import { decodeScriptPubKeyToTaprootAddress, formatDuration } from "$lib/utils.js";
   import dayjs from "dayjs";
   import LocalizedFormat from "dayjs/plugin/localizedFormat";
   import { PUBLIC_BTC_NETWORK } from "$env/static/public";
@@ -23,6 +23,7 @@
   const outpoint = space.history?.find((x) => !!x.meta.outpoint)?.meta?.outpoint;
   const currentOwner = space.history ? decodeScriptPubKeyToTaprootAddress(space.history?.find((x) => !!x.meta?.script_pubkey).meta?.script_pubkey, PUBLIC_BTC_NETWORK) : null;
   const currentBlockHeight = blockStats.blockHeight;
+  const expiryHeight = space.history?.find(x => x.action == 'transfer')?.meta?.covenant?.expire_height;
 
   let auctionHeader = "";
   if (space.status == "pre-auction") auctionHeader = "Auction";
@@ -34,12 +35,13 @@
     {
       name: "Open",
       description: "Submit an open transaction to propose the space for auction.",
-      done: true,
+      done: space.status != 'revoked',
+      current: space.status == 'revoked'
     },
     {
       name: "Pre-auction",
       description: "Top 10 highest-bid spaces advance to auctions daily.",
-      done: space.status != "pre-auction",
+      done: !['pre-auction', 'revoked'].includes(space.status),
       current: space.status == 'pre-auction'
     },
     {
@@ -158,6 +160,12 @@
                 <span class="text-sm">Outpoint:</span>
                 <a target="_blank" href="https://mempool.space/testnet/tx/{outpoint?.split(':')[0]}#vout={outpoint?.split(':')[1]}" class="text-[#ec8e32] hover:text-orange-700 break-words">{outpoint}</a>
               </li>
+              {#if space.status == 'registered'}
+                <li class="border-b border-b-gray-400 pb-2">
+                  <span class="text-sm">Expiry block height:</span><br>
+                  <span class='text-[#ec8e32] hover:text-orange-700'>{expiryHeight} (in {formatDuration((expiryHeight - currentBlockHeight) * 10 * 60)})</span>
+                </li>
+              {/if}
               <li>
                 <span class="text-sm">Records:</span> <span class="text-sm text-gray-600">None</span>
               </li>
@@ -179,7 +187,7 @@
                   <tr>
                     <td class="hidden px-3 py-5 text-left text-sm text-gray-500 sm:table-cell">{event.action[0].toUpperCase() + event.action.slice(1)}</td>
                     <td class="hidden px-3 py-5 text-left text-gray-500 sm:table-cell">
-                      <a href="#" class="text-[#ec8e32] hover:text-orange-700 flex flex-col">
+                      <a href="/tx/{event.txid}" class="text-[#ec8e32] hover:text-orange-700 flex flex-col">
                         <span>{event.txid.slice(0, 15)}...{event.txid.slice(-15)}</span>
                         <span class="text-gray-500 text-xs">{dayjs.unix(event.transaction.block.time).format("lll")}</span>
                       </a>

@@ -11,7 +11,7 @@
   
   export let data;
   
-  let currentBlockHeight = data.blockStats.blockHeight;
+  let currentBlockHeight = data.blockStats?.blockHeight;
   let sortOptions = [
     { name: "Ending soonest", key: "ending", direction: "asc" }, 
     { name: "Highest price", key: "price", direction: "desc" }, 
