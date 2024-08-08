@@ -2,6 +2,8 @@
   import { browser } from "$app/environment";
   import { onMount } from "svelte";
 
+  export let showName = false;
+
   let currentTheme = browser ? localStorage.theme ?? "system" : "system";
   let menuVisible = false;
   let elem: HTMLElement;
@@ -25,8 +27,8 @@
   });
 </script>
 
-<div bind:this={elem} class="relative">
-  <button class="p-2" on:click={() => (menuVisible = !menuVisible)}>
+<div bind:this={elem} class="relative w-fit mx-auto">
+  <button class="p-2 flex gap-2 items-center mx-auto" on:click={() => (menuVisible = !menuVisible)}>
     {#if currentTheme == "dark"}
       <svg xmlns="http://www.w3.org/2000/svg" class="w-[20px] h-[20px] dark:fill-gray-300" viewBox="0 0 512 512"
         ><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path
@@ -46,9 +48,12 @@
         /></svg
       >
     {/if}
+    {#if showName}
+      Theme: {currentTheme[0].toUpperCase() + currentTheme.slice(1)}
+    {/if}
   </button>
   {#if menuVisible}
-    <ul class="cursor-pointer absolute top-full left-0 z-50 border border-primary bg-primary">
+    <ul class="cursor-pointer absolute top-full left-0 z-50 border border-primary bg-primary min-w-full">
       <li
         class="flex gap-2 group hover:bg-gray-300 dark:hover:text-black p-2"
         on:click={() => {

@@ -119,14 +119,19 @@
     <nav class='fixed top-0 left-0 w-[100vw] h-[100vh] z-[500] flex transition-transform ease-in-out {mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}'>
       <div class='w-[20%] bg-black bg-opacity-30 h-full'></div>
       <ul class='w-[80%] bg-[#b0661d] flex flex-col gap-10 pt-20'>
-        <li class='text-center'><a on:click={() => mobileMenuOpen = false} href="/" class="!text-lg btn {$page.url.pathname == '/' ? 'bg-[#25292e] border-[#25292e]' : 'btn-ghost'} btn-sm">Current Auctions</a></li>
-        <li class='text-center'><a on:click={() => mobileMenuOpen = false} href="/upcoming" class="!text-lg btn {$page.url.pathname == '/upcoming' ? 'bg-[#25292e] border-[#25292e]' : 'btn-ghost'} btn-sm">Upcoming</a></li>
-        <li class='text-center'><a on:click={() => mobileMenuOpen = false} href="/past" class="!text-lg btn {$page.url.pathname == '/past' ? 'bg-[#25292e] border-[#25292e]' : 'btn-ghost'} btn-sm">Past</a></li>
+        <li class='text-center'><a on:click={() => mobileMenuOpen = false} href="/" class="!text-lg btn {$page.url.pathname == '/' ? 'light:bg-primary light:border-primary bg-[#25292e] border-[#25292e]' : 'btn-ghost'} btn-sm">Current Auctions</a></li>
+        <li class='text-center'><a on:click={() => mobileMenuOpen = false} href="/upcoming" class="!text-lg btn {$page.url.pathname == '/upcoming' ? 'light:bg-primary light:border-primary bg-[#25292e] border-[#25292e]' : 'btn-ghost'} btn-sm">Upcoming</a></li>
+        <li class='text-center'><a on:click={() => mobileMenuOpen = false} href="/past" class="!text-lg btn {$page.url.pathname == '/past' ? 'light:bg-primary light:border-primary bg-[#25292e] border-[#25292e]' : 'btn-ghost'} btn-sm">Past</a></li>
         <!-- <li class='text-center'><a on:click={() => mobileMenuOpen = false} href="/explorer" class="!text-lg btn {$page.url.pathname == '/explorer' ? 'bg-[#25292e] border-[#25292e]' : 'btn-ghost'} btn-sm">Explorer</a></li> -->
         <li class='text-center'><a on:click={() => mobileMenuOpen = false} href="https://spacesprotocol.org" target="_blank" class="!text-lg btn btn-ghost btn-sm">Help</a></li>
+        <li class="mt-20 !text-lg">
+          <ThemeToggle showName={true} />
+        </li>
       </ul>
     </nav>
-    <ThemeToggle />
+    <div class="hidden md:block">
+      <ThemeToggle />
+    </div>
   </div>
 </div>
 <div class="container mx-auto pb-10">
