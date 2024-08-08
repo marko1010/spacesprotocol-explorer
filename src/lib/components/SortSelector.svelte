@@ -25,7 +25,7 @@
 </script>
 
 <button class="relative w-full" bind:this={elem} on:click={() => (open = !open)}>
-  <div class="bg-black border border-primary group w-full p-2 cursor-pointer flex justify-between items-center gap-1 text-sm">
+  <div class="dark:bg-black border border-primary group w-full p-2 cursor-pointer flex justify-between items-center gap-1 text-sm">
     <div class="grow">{selected.name}</div>
     <svg class="w-[18px] h-[18px] group-hover:fill-gray-300" xmlns="http://www.w3.org/2000/svg" fill="gray" viewBox="0 0 320 512"
       ><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path
@@ -33,7 +33,7 @@
       /></svg
     >
   </div>
-  <div class="absolute top-[calc(100%+5px)] w-full right-0 z-10 flex-col gap-2 bg-black border border-primary p-2 text-sm rounded-sm {open ? 'flex' : 'hidden'}">
+  <div class="absolute top-[calc(100%+5px)] w-full right-0 z-10 flex-col gap-2 light:bg-primary dark:bg-black border border-primary p-2 text-sm rounded-sm {open ? 'flex' : 'hidden'}">
     {#each options as option}
       <button
         on:click|stopPropagation={() => {
@@ -41,7 +41,7 @@
           open = false;
           dispatch('change', option);
         }}
-        class="cursor-pointer text-left {selected == option ? 'bg-gray-800' : ''} hover:bg-gray-800 text-nowrap p-1">{option.name}</button
+        class="cursor-pointer text-left {selected == option ? 'bg-gray-800 light:bg-gray-500 light:text-white' : ''} hover:bg-gray-800 light:hover:bg-gray-500 light:hover:text-white text-nowrap p-1">{option.name}</button
       >
     {/each}
   </div>

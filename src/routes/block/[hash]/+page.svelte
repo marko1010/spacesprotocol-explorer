@@ -40,8 +40,8 @@
     </div>
     <div class='flex flex-col gap-10'>
         {#each data.transactions as tx}
-            <div class="flex flex-wrap gap-5 p-5 md:p-8 bg-[#0b0d10]">
-                <h1 class="w-full text-gray-500">Tx # <a href='/tx/{tx.txid}' class="text-gray-300 hover:text-[#ec8e32] break-all">{tx.txid}</a></h1>
+            <div class="flex flex-wrap gap-5 p-5 md:p-8 bg-[#0b0d10] light:bg-gray-100 rounded-xl">
+                <h1 class="w-full text-gray-500">Tx # <a href='/tx/{tx.txid}' class="text-gray-300 light:text-gray-600 hover:text-[#ec8e32] break-all">{tx.txid}</a></h1>
                 <div class="flex flex-col basis-full lg:basis-[45%] grow">
                     <h2 class="text-xl mb-1 pb-2 border-b border-b-gray-500">Inputs</h2>
                     <div class="flex flex-col gap-4 p-5 pl-1">

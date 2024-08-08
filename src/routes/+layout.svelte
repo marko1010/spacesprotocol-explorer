@@ -5,6 +5,7 @@
   import { onMount } from "svelte";
   import { goto } from "$app/navigation";
   import { browser } from '$app/environment'; 
+  import ThemeToggle from "$lib/components/ThemeToggle.svelte";
   let search = "";
   let timeout: any;
   let searching = false;
@@ -49,12 +50,12 @@
       showSearchResults = false;
       if (highlightedResultIdx >= 0) {
         search = searchResults[highlightedResultIdx].name;
-        goto(`/space/${searchResults[highlightedResultIdx].name}`);
+        goto(`/space/${search.slice(search[0] == '@' ? 1 : 0)}`);
       } else if (search.length > 0 && search != '@') {
         navigatingToSpacePage = true;
         showSearchResults = false;
         search = search[0] == '@' ? search : `@${search}`;
-        goto(`/space/@${search[0] == '@' ? search.slice(1) : search}`);
+        goto(`/space/${search[0] == '@' ? search.slice(1) : search}`);
       }
     }
   }
@@ -70,7 +71,7 @@
   });
 </script>
 
-<div class="shadow-lg mb-10 flex justify-center">
+<div class="shadow-sm mb-10 flex justify-center">
   <div class="container flex p-2 px-2 md:px-10 items-center gap-2 md:gap-5">
     <a href="/" class="flex items-center shrink-0">
       <img class="w-[50px] h-[50px]" src="/logo.png" alt="Spaces Protocol" />
@@ -79,14 +80,14 @@
     <label bind:this={searchBar} class="h-[40px] grow input input-bordered !outline-none flex items-center gap-2 relative">
       <input on:keydown={highlightResult} on:focus={() => {navigatingToSpacePage = false; showSearchResults = searchResults.length > 0 && search.length > 0}} bind:value={search} on:input={(e) => handleSearch(e.target.value)} type="text" class="grow" placeholder="Search" />
       {#if !navigatingToSpacePage && (searching || showSearchResults)}
-        <div class="text-sm text-gray-500 flex flex-col px-4 py-2 gap-1 bg-black border border-primary w-full absolute top-[calc(100%+5px)] left-0">
+        <div class="text-sm text-gray-500 flex flex-col px-4 py-2 gap-1 bg-black light:bg-primary light:text-primary-content border border-primary w-full absolute top-[calc(100%+5px)] left-0">
           {#if searching && !navigatingToSpacePage}
             <div class="flex p-1 py-2 items-center">
               <Spinner size={2.5} />
             </div>
           {:else if showSearchResults && searchResults.length}
             {#each searchResults as result, idx}
-              <a class="p-1 hover:bg-gray-800 {highlightedResultIdx == idx ? "bg-gray-800" : ""}" on:click={() => {showSearchResults = false; search = result.name;}} href={`/space/${result.name}`}>{result.name}</a>
+              <a class="p-1 hover:bg-gray-800 light:hover:bg-gray-500 light:hover:text-white {highlightedResultIdx == idx ? "bg-gray-800 light:bg-gray-500" : ""}" on:click={() => {showSearchResults = false; search = result.name;}} href={`/space/${result.name.slice(1)}`}>{result.name}</a>
             {/each}
           {:else if showSearchResults}
             No results
@@ -101,11 +102,11 @@
         <path fill-rule="evenodd" d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z" clip-rule="evenodd" />
       </svg>
     </label>
-    <div class="md:block hidden">
+    <div class="md:flex hidden">
       <a href="/" class="btn {$page.url.pathname == '/' ? 'btn-primary' : 'btn-ghost'} btn-sm">Current Auctions</a>
       <a href="/upcoming" class="btn {$page.url.pathname == '/upcoming' ? 'btn-primary' : 'btn-ghost'} btn-sm">Upcoming</a>
       <a href="/past" class="btn {$page.url.pathname == '/past' ? 'btn-primary' : 'btn-ghost'} btn-sm">Past</a>
-      <a href="/explorer" class="btn {$page.url.pathname == '/explorer' ? 'btn-primary' : 'btn-ghost'} btn-sm">Explorer</a>
+      <!-- <a href="/explorer" class="btn {$page.url.pathname == '/explorer' ? 'btn-primary' : 'btn-ghost'} btn-sm">Explorer</a> -->
       <a href="https://spacesprotocol.org" target="_blank" class="btn btn-ghost btn-sm">Help</a>
     </div>
     <button class="md:hidden mr-1 ml-[2px] z-[501]" on:click={() => mobileMenuOpen = !mobileMenuOpen }>
@@ -121,10 +122,11 @@
         <li class='text-center'><a on:click={() => mobileMenuOpen = false} href="/" class="!text-lg btn {$page.url.pathname == '/' ? 'bg-[#25292e] border-[#25292e]' : 'btn-ghost'} btn-sm">Current Auctions</a></li>
         <li class='text-center'><a on:click={() => mobileMenuOpen = false} href="/upcoming" class="!text-lg btn {$page.url.pathname == '/upcoming' ? 'bg-[#25292e] border-[#25292e]' : 'btn-ghost'} btn-sm">Upcoming</a></li>
         <li class='text-center'><a on:click={() => mobileMenuOpen = false} href="/past" class="!text-lg btn {$page.url.pathname == '/past' ? 'bg-[#25292e] border-[#25292e]' : 'btn-ghost'} btn-sm">Past</a></li>
-        <li class='text-center'><a on:click={() => mobileMenuOpen = false} href="/explorer" class="!text-lg btn {$page.url.pathname == '/explorer' ? 'bg-[#25292e] border-[#25292e]' : 'btn-ghost'} btn-sm">Explorer</a></li>
+        <!-- <li class='text-center'><a on:click={() => mobileMenuOpen = false} href="/explorer" class="!text-lg btn {$page.url.pathname == '/explorer' ? 'bg-[#25292e] border-[#25292e]' : 'btn-ghost'} btn-sm">Explorer</a></li> -->
         <li class='text-center'><a on:click={() => mobileMenuOpen = false} href="https://spacesprotocol.org" target="_blank" class="!text-lg btn btn-ghost btn-sm">Help</a></li>
       </ul>
     </nav>
+    <ThemeToggle />
   </div>
 </div>
 <div class="container mx-auto pb-10">
