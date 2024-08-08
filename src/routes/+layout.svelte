@@ -50,6 +50,7 @@
       showSearchResults = false;
       if (highlightedResultIdx >= 0) {
         search = searchResults[highlightedResultIdx].name;
+        highlightedResultIdx = -1;
         goto(`/space/${search.slice(search[0] == '@' ? 1 : 0)}`);
       } else if (search.length > 0 && search != '@') {
         navigatingToSpacePage = true;
