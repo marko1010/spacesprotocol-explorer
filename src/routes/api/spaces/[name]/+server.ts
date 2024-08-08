@@ -18,7 +18,7 @@ export const GET: RequestHandler = async function ({ request, url, params }) {
                         (select bid_amount from (
                             select name, bid_amount, dense_rank() over(order by bid_amount desc, name_sha256) as rank from spaces
                             where status = 'pre-auction'
-                        ) order by rank desc limit 1)
+                        ) where rank <= 10 order by rank desc limit 1)
                     `.as('top_10_cutoff_bid')
         },
         orderBy: spaces.id,

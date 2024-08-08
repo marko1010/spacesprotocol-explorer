@@ -28,7 +28,7 @@
             <span class="text-gray-500">Version</span>
         </div>
         <div class="flex flex-col grow gap-1">
-            <span class='text-xl text-[#ec8e32] font-semibold'>{dayjs.unix(data.data.lock_time).format('lll')}</span>
+            <span class='text-xl text-[#ec8e32] font-semibold'>{data.data.lock_time}</span>
             <span class="text-gray-500">Lock Time</span>
         </div>
         <div class="flex flex-col grow gap-1">

@@ -17,7 +17,7 @@ export const blocks = pgTable('blocks', {
 	chainwork: text('chainwork').notNull(),
 	nTx: integer('n_tx').notNull(),
 	previousblockhash: text('previousblockhash').notNull(),
-	nextblockhash: text('nextblockhash').notNull(),
+	nextblockhash: text('nextblockhash'),
 	strippedsize: integer('strippedsize').notNull(),
 	size: bigint('size', { mode: 'number' }).notNull(),
 	weight: bigint('weight', { mode: 'number' }).notNull(),
